@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Create oncall triage prompt
         run: |
@@ -109,7 +109,8 @@ jobs:
           EOF
 
       - name: Run Claude Code for Oncall Triage
-        uses: anthropics/claude-code-base-action@beta
+        # Legacy base action retained: v1 changes actor authorization, not just inputs.
+        uses: anthropics/claude-code-base-action@e8132bc5e637a42c27763fc757faa37e1ee43b34 # v0.0.63
         with:
           prompt_file: /tmp/claude-prompts/oncall-triage-prompt.txt
           allowed_tools: "mcp__github__list_issues,mcp__github__get_issue,mcp__github__get_issue_comments,mcp__github__update_issue"
