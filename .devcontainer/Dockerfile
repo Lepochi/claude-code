@@ -5,6 +5,10 @@ ENV TZ="$TZ"
 
 ARG CLAUDE_CODE_VERSION=latest
 
+# Upgrade apt before any other package fetch (CVE-2026-109518).
+# A MITM can swap a package after verification when Acquire::Retries > 0.
+RUN apt-get -o Acquire::Retries=0 update && apt-get -o Acquire::Retries=0 install -y --only-upgrade apt && rm -rf /var/lib/apt/lists/*
+
 # Install basic development tools and iptables/ipset
 RUN apt-get update && apt-get install -y --no-install-recommends \
   less \
